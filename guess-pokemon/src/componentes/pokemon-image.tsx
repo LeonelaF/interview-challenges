@@ -1,6 +1,4 @@
-import "./styles.css";
-
-const Image = (src: any) => {
-  return <img alt="pokemon" src={src} />;
+const Image = ({ source }) => {
+  return <img alt="pokemon" src={source} />;
 };
 export default Image;

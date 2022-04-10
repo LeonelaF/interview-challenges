@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import api from "../api";
 import PokemonForm from "../componentes/pokemon-form";
+import Image from "../componentes/pokemon-image";
 import { Pokemon } from "../types";
 
 const Discover: FC = () => {
@@ -17,12 +18,15 @@ const Discover: FC = () => {
     return false;
   };
 
-  if (!pokemon) return <progress className="nes-progress is-pattern" max="100" value="50" />;
+  if (!pokemon)
+    return (
+      <progress className="nes-progress is-pattern" max="100" value="50" />
+    );
 
   return (
     <main>
       <h1>¿Quién es este Pokemon?</h1>
-      <img alt="pokemon" src={pokemon.image} />
+      <Image source={pokemon.image} />
       <PokemonForm onSubmit={onSubmit} />
     </main>
   );
