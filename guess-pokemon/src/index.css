@@ -12,7 +12,9 @@ img {
   width: 25%;
   pointer-events: none;
 }
-
+.showed{
+  width: 50%;
+}
 .hidden {
   filter: hue-rotate(0deg) brightness(0%);  
 }

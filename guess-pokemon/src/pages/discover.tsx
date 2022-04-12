@@ -2,8 +2,18 @@ import { FC, useEffect, useState } from "react";
 import api from "../api";
 import PokemonForm from "../componentes/pokemon-form";
 import { Pokemon } from "../types";
+import quienSfx from "../../assets/sounds/quien-es-ese-pokemon.mp3";
+import useSound from "use-sound";
 
-const Discover: FC = () => {
+interface SoundProps{
+  sound: () => void; 
+  ref: any;
+}
+
+const Discover: FC<SoundProps> = ({ sound, ref }) => {
+  console.log("Discover ref",ref.current);
+  const [play, { stop }] = useSound(quienSfx);
+
   const getPoke = async () => {
     setPokemon(await api.random());
   };
@@ -19,9 +29,12 @@ const Discover: FC = () => {
   };
 
   const handleReplayButton = () => {
+    sound();
+    stop();
     setPokemon(undefined);
     setIsShowed(false);
     getPoke();
+    play();
   };
 
   if (!pokemon)
@@ -38,11 +51,11 @@ const Discover: FC = () => {
         src={pokemon.image}
       />
 
-      <PokemonForm onSubmit={onSubmit} />
+      <PokemonForm onSubmit={onSubmit} ref={ref} />
       {showed && (
         <>
           <p>{pokemon.name}</p>
-          <button onClick={handleReplayButton}> replay</button>
+          <button onClick={handleReplayButton}> replay </button>
         </>
       )}
     </main>

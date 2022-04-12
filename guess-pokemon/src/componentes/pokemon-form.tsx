@@ -1,18 +1,16 @@
 import { FC, useRef } from "react";
-import useSound from "use-sound";
-import pokemonSfx from "../../assets/sounds/quien-es-ese-pokemon.mp3";
 
 interface PokemonFormProps {
   onSubmit: (pokemonName: string) => void;
+  ref: any;
 }
 
-const PokemonForm: FC<PokemonFormProps> = ({ onSubmit }) => {
-  const refInput: any = useRef();
-  const [play] = useSound(pokemonSfx);
-
+const PokemonForm: FC<PokemonFormProps> = ({ onSubmit, ref }) => {
+  console.log("form ref", ref.current);
+  
   const handleOnSubmit = () => {
-    onSubmit(refInput.current.value);
-    refInput.current.value = "";
+    onSubmit(ref.current.value);
+    ref.current.value = "";
   };
 
   return (
@@ -23,11 +21,10 @@ const PokemonForm: FC<PokemonFormProps> = ({ onSubmit }) => {
         handleOnSubmit();
       }}
     >
-      <input className="nes-input" id="name_field" ref={refInput} type="text" />
+      <input className="nes-input" id="name_field" ref={ref} type="text" />
       <button
         className="nes-btn is-primary"
         type="submit"
-        onClick={() => play()}
       >
         ADIVINAR
       </button>
