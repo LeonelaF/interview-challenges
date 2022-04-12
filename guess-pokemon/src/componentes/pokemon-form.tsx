@@ -10,16 +10,25 @@ const PokemonForm: FC<PokemonFormProps> = ({ onSubmit }) => {
   const refInput: any = useRef();
   const [play] = useSound(pokemonSfx);
 
+  const handleOnSubmit = () => {
+    onSubmit(refInput.current.value);
+    refInput.current.value = "";
+  };
+
   return (
     <form
       className="nes-field is-inline"
       onSubmit={(e: any) => {
         e.preventDefault();
-        onSubmit(refInput.current.value);
+        handleOnSubmit();
       }}
     >
       <input className="nes-input" id="name_field" ref={refInput} type="text" />
-      <button className="nes-btn is-primary" type="submit" onClick={() => play()}>
+      <button
+        className="nes-btn is-primary"
+        type="submit"
+        onClick={() => play()}
+      >
         ADIVINAR
       </button>
     </form>

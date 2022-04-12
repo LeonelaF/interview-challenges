@@ -15,6 +15,7 @@ function App() {
     stopIntro();
     play();
   };
+
   if (!showDiscover) {
     return (
       <main>

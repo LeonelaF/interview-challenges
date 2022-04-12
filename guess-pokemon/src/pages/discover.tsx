@@ -8,22 +8,43 @@ const Discover: FC = () => {
     setPokemon(await api.random());
   };
   const [pokemon, setPokemon] = useState<Pokemon>();
+  const [showed, setIsShowed] = useState<boolean>(false);
 
   useEffect(() => {
     getPoke();
   }, []);
 
   const onSubmit = () => {
-    return false;
+    setIsShowed(true);
   };
 
-  if (!pokemon) return <progress className="nes-progress is-pattern" max="100" value="50" />;
+  const handleReplayButton = () => {
+    setPokemon(undefined);
+    setIsShowed(false);
+    getPoke();
+  };
+
+  if (!pokemon)
+    return (
+      <progress className="nes-progress is-pattern" max="100" value="50" />
+    );
 
   return (
     <main>
       <h1>¿Quién es este Pokemon?</h1>
-      <img alt="pokemon" src={pokemon.image} />
+      <img
+        alt="pokemon"
+        className={!showed ? "hidden" : "showed"}
+        src={pokemon.image}
+      />
+
       <PokemonForm onSubmit={onSubmit} />
+      {showed && (
+        <>
+          <p>{pokemon.name}</p>
+          <button onClick={handleReplayButton}> replay</button>
+        </>
+      )}
     </main>
   );
 };
