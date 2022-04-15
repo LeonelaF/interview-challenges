@@ -1,17 +1,17 @@
-import { FC, useEffect, useState } from "react";
+import { FC, forwardRef, useEffect, useState } from "react";
 import api from "../api";
 import PokemonForm from "../componentes/pokemon-form";
 import { Pokemon } from "../types";
 import quienSfx from "../../assets/sounds/quien-es-ese-pokemon.mp3";
 import useSound from "use-sound";
 
-interface SoundProps{
-  sound: () => void; 
-  ref: any;
+interface SoundProps {
+  sound: () => void;
+  ref: { current: string };
 }
 
-const Discover: FC<SoundProps> = ({ sound, ref }) => {
-  console.log("Discover ref",ref.current);
+const Discover: FC<any> = forwardRef(({ sound }, ref) => {
+  console.log("Discover ref", ref);
   const [play, { stop }] = useSound(quienSfx);
 
   const getPoke = async () => {
@@ -24,8 +24,10 @@ const Discover: FC<SoundProps> = ({ sound, ref }) => {
     getPoke();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = (sarasa) => {
     setIsShowed(true);
+    //console.log(ref,"discover ref");
+    console.log(sarasa, "discover sarasa")
   };
 
   const handleReplayButton = () => {
@@ -60,6 +62,6 @@ const Discover: FC<SoundProps> = ({ sound, ref }) => {
       )}
     </main>
   );
-};
+});
 
 export default Discover;
