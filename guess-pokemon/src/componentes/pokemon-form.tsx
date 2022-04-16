@@ -1,4 +1,4 @@
-import { FC, forwardRef } from "react";
+import { FC, useRef } from "react";
 
 interface refProps {
   current: string;
@@ -8,33 +8,32 @@ interface PokemonFormProps {
   ref: refProps;
 }
 
-const PokemonForm: FC<any> = forwardRef(({ onSubmit }, ref) => {
-  console.log("form ref", ref);
+const PokemonForm: FC<any> = ({ onSubmit, showed, replay }) => {
+  const inputRef = useRef<any>();
 
   const handleOnSubmit = () => {
-    onSubmit(ref.current.value);
-    ref.current.value = "";
+    onSubmit(inputRef.current.value);
+    console.log(inputRef.current.value);
   };
 
   return (
     <form
       className="nes-field is-inline"
       onSubmit={(e: any) => {
-        e.preventDefault();
-        handleOnSubmit();
+        if (!showed) {
+          e.preventDefault();
+          handleOnSubmit();
+        } else {
+          replay();
+        }
       }}
     >
-      <input
-        className="nes-input"
-        id="name_field"
-        onChange={(e) => (ref.current = e.target.value)}
-        type="text"
-      />
+      <input className="nes-input" id="name_field" ref={inputRef} type="text" />
       <button className="nes-btn is-primary" type="submit">
-        ADIVINAR
+        {showed ? "REPLAY" : "ADIVINAR"}
       </button>
     </form>
   );
-});
+};
 
 export default PokemonForm;

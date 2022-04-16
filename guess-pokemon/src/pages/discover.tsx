@@ -1,4 +1,4 @@
-import { FC, forwardRef, useEffect, useState } from "react";
+import { FC, forwardRef, useEffect, useRef, useState } from "react";
 import api from "../api";
 import PokemonForm from "../componentes/pokemon-form";
 import { Pokemon } from "../types";
@@ -10,24 +10,31 @@ interface SoundProps {
   ref: { current: string };
 }
 
-const Discover: FC<any> = forwardRef(({ sound }, ref) => {
-  console.log("Discover ref", ref);
+const Discover: FC<any> = ({ sound }) => {
   const [play, { stop }] = useSound(quienSfx);
 
   const getPoke = async () => {
     setPokemon(await api.random());
   };
+
   const [pokemon, setPokemon] = useState<Pokemon>();
-  const [showed, setIsShowed] = useState<boolean>(false);
+  const [showed, setIsShowed] = useState<any>({
+    view: false,
+    isCorrect: undefined,
+  });
+  const [counter, setCounter] = useState<number>(0);
+  const isSamePokemon = (inputValue: string) => pokemon?.name == inputValue;
 
   useEffect(() => {
     getPoke();
   }, []);
 
-  const onSubmit = (sarasa) => {
-    setIsShowed(true);
-    //console.log(ref,"discover ref");
-    console.log(sarasa, "discover sarasa")
+  const onSubmit = (inputValue: string) => {
+    if (isSamePokemon(inputValue)) {
+      setCounter(counter + 1);
+    }
+
+    setIsShowed({...showed, });
   };
 
   const handleReplayButton = () => {
@@ -53,15 +60,19 @@ const Discover: FC<any> = forwardRef(({ sound }, ref) => {
         src={pokemon.image}
       />
 
-      <PokemonForm onSubmit={onSubmit} ref={ref} />
+      <PokemonForm
+        onSubmit={onSubmit}
+        showed={showed}
+        replay={handleReplayButton}
+      />
       {showed && (
         <>
           <p>{pokemon.name}</p>
-          <button onClick={handleReplayButton}> replay </button>
         </>
       )}
+      {isCorrect ? "CORRECTO" : "LE ERRASTE"}
     </main>
   );
-});
+};
 
 export default Discover;

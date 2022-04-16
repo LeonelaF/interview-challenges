@@ -2,14 +2,13 @@ import { useRef, useState } from "react";
 import useSound from "use-sound";
 import pokemonIntro from "../assets/sounds/pokemon-intro.mp3";
 import quienSfx from "../assets/sounds/quien-es-ese-pokemon.mp3";
-
 import Discover from "./pages/discover";
+
 
 function App() {
   const refInput: any = useRef();
-  console.log("app ref", refInput.current);
   const [showDiscover, setShowDiscover] = useState(false);
-  const [play, {stop : stopSfx}] = useSound(quienSfx);
+  const [play, { stop: stopSfx }] = useSound(quienSfx);
   const [playIntro, { stop: stopIntro }] = useSound(pokemonIntro);
 
   const handleClick = () => {
@@ -41,7 +40,7 @@ function App() {
 
   return (
     <main>
-      <Discover sound={stopSfx} ref={refInput}/>
+      <Discover sound={stopSfx} ref={refInput} />
     </main>
   );
 }
