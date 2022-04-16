@@ -1,21 +1,19 @@
 import { FC, useRef } from "react";
 
-interface refProps {
-  current: string;
-}
 interface PokemonFormProps {
   onSubmit: (pokemonName: string) => void;
-  ref: refProps;
+  showed: boolean;
+  replay: () => void;
 }
 
-const PokemonForm: FC<any> = ({ onSubmit, showed, replay }) => {
+const PokemonForm: FC<PokemonFormProps> = ({ onSubmit, showed, replay }) => {
   const inputRef = useRef<any>();
 
   const handleOnSubmit = () => {
     onSubmit(inputRef.current.value);
     console.log(inputRef.current.value);
   };
-
+//TODO: inhabilitar input cuando isShowed=true
   return (
     <form
       className="nes-field is-inline"

@@ -4,9 +4,8 @@ import pokemonIntro from "../assets/sounds/pokemon-intro.mp3";
 import quienSfx from "../assets/sounds/quien-es-ese-pokemon.mp3";
 import Discover from "./pages/discover";
 
-
+//TODO: Arreglar estilos para que quede bonito, cortar sonidos
 function App() {
-  const refInput: any = useRef();
   const [showDiscover, setShowDiscover] = useState(false);
   const [play, { stop: stopSfx }] = useSound(quienSfx);
   const [playIntro, { stop: stopIntro }] = useSound(pokemonIntro);
@@ -16,6 +15,8 @@ function App() {
     stopIntro();
     play();
   };
+
+  console.log("app",showDiscover);
 
   if (!showDiscover) {
     return (
@@ -40,7 +41,7 @@ function App() {
 
   return (
     <main>
-      <Discover sound={stopSfx} ref={refInput} />
+      <Discover sound={stopSfx} />
     </main>
   );
 }

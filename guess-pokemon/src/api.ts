@@ -811,7 +811,7 @@ export const POKEMON = [
   // "meltan",
   // "melmetal",
 ];
-
+//https://pokeapi.co/api/v2/stat/{id or name}/ -> stats
 export default {
   random: async (): Promise<Pokemon> => {
     const id = Math.round(Math.random() * (POKEMON.length - 1) + 1);

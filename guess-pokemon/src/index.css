@@ -18,4 +18,10 @@ img {
 .hidden {
   filter: hue-rotate(0deg) brightness(0%);  
 }
+.correcto{
+  color: green;
+}
+.incorrecto{
+  color:red;
+}
 
