@@ -23,7 +23,10 @@ const Discover: FC<SoundProps> = ({ sound }) => {
     setPokemon(await api.random());
   };
 
-  const isSamePokemon = useCallback((inputValue: string) => pokemon?.name == inputValue,[pokemon]);
+  const isSamePokemon = useCallback(
+    (inputValue: string) => pokemon?.name == inputValue,
+    [pokemon]
+  );
 
   const counter = useMemo(getCounter, [isShowed]);
 
@@ -45,7 +48,7 @@ const Discover: FC<SoundProps> = ({ sound }) => {
     getPoke();
     play();
   };
-  
+
   if (!pokemon)
     return (
       <progress className="nes-progress is-pattern" max="100" value="50" />
@@ -57,26 +60,35 @@ const Discover: FC<SoundProps> = ({ sound }) => {
       <h1>¿Quién es este Pokemon?</h1>
       <img
         alt="pokemon"
-        className={!isShowed ? "hidden" : "showed"}
+        className={isShowed !=undefined || isShowed ? "showed" : "hidden"}
         src={pokemon.image}
       />
 
       <PokemonForm
         onSubmit={onSubmit}
-        showed={!!isShowed}
+        showed={isShowed!=undefined || isShowed}
         replay={handleReplayButton}
       />
       {isShowed != undefined && (
         <>
           <p>{pokemon.name}</p>
           {isShowed ? (
-            <span className="correcto">Correcto</span>
+            <section className="message -right">
+              <div className="nes-balloon from-right">
+                <span className="correcto">Correcto</span>
+              </div>
+              <i className="nes-charmander"></i>
+            </section>
           ) : (
-            <span className="incorrecto">Incorrecto</span>
+            <section className="message -right">
+              <div className="nes-balloon from-right">
+                <p className="incorrecto">Incorrecto</p>
+              </div>
+              <i className="nes-squirtle"></i>
+            </section>
           )}
         </>
       )}
-      {}
     </main>
   );
 };
